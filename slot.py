@@ -42,7 +42,17 @@ def get_slot_spin(rows,cols,symbols): # this is to make the slot machine stuctur
 
 
 
+def print_slot(columns):
+    # since we created nested list so they are basically rows and we need to transpose them to cols so we can use them
+    #transposing the nested col list
 
+    for row in range(len(columns[0])):  # determine the number of rows and that we get from the number of elements in each col hence this logic
+        for i, column in enumerate(columns):
+            if i != len(columns)-1:
+                print(column[row], "|")
+            else:
+                print(column[row])
+            
 
 
 def deposit(): #responsible to collect user input for the money they deposit
