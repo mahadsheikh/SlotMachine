@@ -25,6 +25,7 @@ symbol_value = { # this is defined for each symbol and their winning multiplier
 def check_winnings(columns,lines,bet,values):
     # the lines betting is if 1 then first one and 2 then first 2 are bet on
     winnings = 0
+    winning_lines = []
     for line in range(lines):# check all rows
         symbol = columns[0][line] # first col alwys to start with ( we are working with a non transposed matrix here )
         for col in columns:
@@ -33,9 +34,10 @@ def check_winnings(columns,lines,bet,values):
                 break
         else:
             winnings += symbol_value[symbol] * bet
+            winning_lines.append(line+1)
 
                 
-    return winnings
+    return winnings, winning_lines
 
 
 
@@ -126,11 +128,7 @@ def get_bet():
 
     return b_amount
 
-
-
-
-def main(): # this is done to call it when we need to re run the program
-    balance = deposit()
+def game(balance):
     lines = get_no_lines()
 
     # got to check if the bet is in the balance range so using while loop
@@ -146,5 +144,28 @@ def main(): # this is done to call it when we need to re run the program
 
     slots = get_slot_spin(ROW,COL,symbol_count)
     print_slot(slots)
+    winnings, winning_lines = check_winnings(slots,lines,bet,symbol_value)
+    print(f"You won ${winnings}")
+    print(f"you won on lines : ", *winning_lines) # unpack operater is the esterick function and psses all things we pass thru it
+    return winnings - total_bet
+
+
+def main(): # this is done to call it when we need to re run the program
+    balance = deposit()
+    while True:
+        print(f"Current balance is ${balance}")
+        if balance <= 0:
+            option = input("You are out of balance. To start a new game press Y (Any key to Quit): ")
+            if option.lower() == 'y':
+                main()
+            else:
+                break
+        spin = input("Press enter to spin (q to Quit) : ")
+        if spin == "q":
+            break
+        balance += game(balance)
+
+    print(f"You left with ${balance}.")
+
 
 main()
