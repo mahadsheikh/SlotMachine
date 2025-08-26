@@ -37,17 +37,17 @@ def get_no_lines():
 def get_bet():
     # this functions will get all the bet that the user places
     while True: #run until valid amount
-    b_amount = input("What amount would you like to deposit? $")
-    if b_amount.isdigit():
-        b_amount = int(b_amount) # string to int for the b_amount after check
-        if b_amount > 0:
-            break
+        b_amount = input("What amount would you like to bet? $")
+        if b_amount.isdigit():
+            b_amount = int(b_amount) # string to int for the b_amount after check
+            if MIN_BET <= b_amount <= MAX_BET:
+                break
+            else:
+                print(f"Amount must be between ${MIN_BET} - ${MAX_BET}.")
         else:
-            print("Amount must be greater than 0.")
-    else:
-        print("Please enter a valid number")
+            print("Please enter a valid number")
 
-    return amount
+    return b_amount
 
 
 
@@ -55,7 +55,8 @@ def get_bet():
 def main(): # this is done to call it when we need to re run the program
     balance = deposit()
     lines = get_no_lines()
-    print(balance,lines)
+    bet = get_bet()
+    print(balance,lines,bet)
 
 
 main()
