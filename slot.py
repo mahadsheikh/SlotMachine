@@ -49,10 +49,11 @@ def print_slot(columns):
     for row in range(len(columns[0])):  # determine the number of rows and that we get from the number of elements in each col hence this logic
         for i, column in enumerate(columns):
             if i != len(columns)-1:
-                print(column[row], "|")
+                print(column[row], end = " | ") # end by default is new line but we can change it so that we can make it do what we want, we still want a new line after evey row
             else:
-                print(column[row])
-            
+                print(column[row], end = "")
+        print() # this is so that after every row we can get a new line in the print and have it sorted or just print a new line after the for loop ends
+
 
 
 def deposit(): #responsible to collect user input for the money they deposit
@@ -118,5 +119,7 @@ def main(): # this is done to call it when we need to re run the program
 
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to ${lines*bet}.")
 
+    slots = get_slot_spin(ROW,COL,symbol_count)
+    print_slot(slots)
 
 main()
