@@ -15,6 +15,31 @@ symbol_count = { # this is defined for each of the cols or reels in the slot mac
     "D" : 8
 }
 
+symbol_value = { # this is defined for each symbol and their winning multiplier
+    "A" : 10,
+    "B" : 4,
+    "C" : 3,
+    "D" : 2
+}
+
+def check_winnings(columns,lines,bet,values):
+    # the lines betting is if 1 then first one and 2 then first 2 are bet on
+    winnings = 0
+    for line in range(lines):# check all rows
+        symbol = columns[0][line] # first col alwys to start with ( we are working with a non transposed matrix here )
+        for col in columns:
+            symbol_to_check = col[line] # check in the row in this case it means the coresponding element in each nested list that makes the row
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += symbol_value[symbol] * bet
+
+                
+    return winnings
+
+
+
+
 
 def get_slot_spin(rows,cols,symbols): # this is to make the slot machine stucture decided by the no of rows and cols
     all_symbols = [] # need to populate this list by iteratin thru the dictionary
