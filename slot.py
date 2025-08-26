@@ -56,7 +56,7 @@ def main(): # this is done to call it when we need to re run the program
     balance = deposit()
     lines = get_no_lines()
     bet = get_bet()
-    print(balance,lines,bet)
+    print(f"You are betting ${bet} on {lines} lines. Total bet is equal to ${lines*bet}.")
 
 
 main()
