@@ -1,6 +1,47 @@
+import random
+
+
 MAX_LINES = 3  # global constant for the lines they can bet on
 MAX_BET = 100
 MIN_BET = 1
+# defining the number of cols and rows in our slot machine 
+ROW = 3
+COL = 3
+# using a dictionary to have set the symbols in the reels, using alphabets instead of images to make it easy
+symbol_count = { # this is defined for each of the cols or reels in the slot machine
+    "A" : 2,
+    "B" : 4,
+    "C" : 6,
+    "D" : 8
+}
+
+
+def get_slot_spin(rows,cols,symbols): # this is to make the slot machine stucture decided by the no of rows and cols
+    all_symbols = [] # need to populate this list by iteratin thru the dictionary
+    for symbol, sym_count in symbols.items(): # iterates thru the dict and store the frequency of symbols that we have for each reel
+        for _ in range(sym_count):
+            all_symbols.append(symbol)
+
+    # need to set how many values in every col
+
+    columns = [] # 3 cols total hence the 3 nested lists would be made
+
+    #for each col we need the number of values decided by how many rows we have 
+
+    for _ in range(cols):
+        column = []
+        current_sym = all_symbols[:] # this is the copy list and we need to make a copy by using the colon other wise it acts as a reference
+        for row in range(rows):
+            value = random.choice(current_sym) # we need to use a copy of the all symbols list beacue once we select one element we cant use it again so we will just remove it entirely causing it to be removed
+            current_sym.remove(value) # removing the selected to remove using it again
+            column.append(value)
+
+        columns.append(column)
+
+    return columns
+
+
+
 
 
 
@@ -55,7 +96,16 @@ def get_bet():
 def main(): # this is done to call it when we need to re run the program
     balance = deposit()
     lines = get_no_lines()
-    bet = get_bet()
+
+    # got to check if the bet is in the balance range so using while loop
+    while True:
+        bet = get_bet()
+        total_bet = lines*bet
+        if total_bet > balance:
+            print(f"Insufficient Balance to place bet. Current balance is ${balance}")
+        else:
+            break
+
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to ${lines*bet}.")
 
 
